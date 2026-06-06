@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#10263a">
+    <title>2048 Triple Tile</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Game header">
+        <div class="brand">
+          <p class="eyebrow" data-i18n="eyebrow">Tiny puzzle, big combo</p>
+          <h1 data-i18n="title">2048 Triple Tile</h1>
+        </div>
+        <div class="controls" aria-label="Game settings">
+          <label class="select-wrap">
+            <span data-i18n="language">Language</span>
+            <select id="languageSelect" aria-label="Language">
+              <option value="en">English</option>
+              <option value="zh">中文</option>
+              <option value="ja">日本語</option>
+            </select>
+          </label>
+          <button id="soundButton" class="icon-button" type="button" aria-pressed="true">
+            <span class="icon" aria-hidden="true">♪</span>
+            <span data-i18n="soundOn">Sound</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="score-row" aria-label="Scores">
+        <div class="score-box">
+          <span data-i18n="score">Score</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="score-box">
+          <span data-i18n="best">Best</span>
+          <strong id="bestScore">0</strong>
+        </div>
+        <button id="newGameButton" class="primary-button" type="button" data-i18n="newGame">New Game</button>
+      </section>
+
+      <section class="game-area" aria-label="2048 board">
+        <div class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="2048 board"></div>
+          <div id="message" class="message hidden" aria-live="polite">
+            <div>
+              <p id="messageTitle">You win!</p>
+              <span id="messageText">Keep going or start over.</span>
+              <div class="message-actions">
+                <button id="continueButton" type="button" data-i18n="continue">Continue</button>
+                <button id="restartButton" type="button" data-i18n="restart">Restart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="side-panel" aria-label="Game information">
+          <div class="panel-block">
+            <h2 data-i18n="howTitle">How to play</h2>
+            <p data-i18n="howText">Use arrow keys or swipe. Merge matching tiles to reach 2048.</p>
+          </div>
+          <div class="panel-block">
+            <h2 data-i18n="sparkTitle">Spark</h2>
+            <p id="sparkText" data-i18n="sparkText">Make a 512 tile to wake up the board.</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+    <canvas id="confetti" aria-hidden="true"></canvas>
+    <script src="app.js"></script>
+  </body>
+</html>
