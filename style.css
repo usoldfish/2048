@@ -1,0 +1,89 @@
+:root {
+    --bg-color: #faf8ef;
+    --grid-bg: #bbada0;
+    --cell-bg: rgba(238, 228, 218, 0.35);
+    --text-dark: #776e65;
+    --text-light: #f9f6f2;
+}
+
+body {
+    margin: 0; padding: 0;
+    background: var(--bg-color);
+    color: var(--text-dark);
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden; touch-action: none;
+}
+
+.container { width: 100%; max-width: 500px; margin: 0 auto; padding: 10px; box-sizing: border-box; }
+header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+h1 { font-size: 48px; font-weight: bold; margin: 0; cursor: pointer; user-select: none; }
+.lang-selector button { background: #8f7a66; color: #fff; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px; }
+.score-container { display: flex; gap: 5px; }
+.score-box { background: #bbada0; padding: 5px 15px; font-size: 13px; color: #eee4da; text-align: center; border-radius: 3px; font-weight: bold; }
+.score-box div { color: #fff; font-size: 20px; }
+.above-game { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+#restart-btn { background: #8f7a66; color: var(--text-light); border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; }
+
+#game-container {
+    position: relative; width: 100%; padding-bottom: 100%; 
+    background: var(--grid-bg); border-radius: 6px; box-sizing: border-box;
+}
+
+/* 背景格采用 Grid 完美均分 */
+.grid-container {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr);
+    gap: 3.0%; padding: 3.0%; z-index: 1; box-sizing: border-box;
+}
+.grid-cell { background: var(--cell-bg); border-radius: 4px; }
+
+/* 方块容器层 */
+.tile-container {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    padding: 3.0%; z-index: 2; box-sizing: border-box; pointer-events: none;
+}
+
+/* 【核心修复】方块大小与高宽完全基于纯百分比，彻底对齐背景 */
+.tile {
+    position: absolute;
+    width: 22.75%; height: 22.75%; /* (100% - 3列*3%空隙) / 4 = 22.75% */
+    border-radius: 4px; font-weight: bold;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 32px; user-select: none;
+    /* 仅对 transform 开启硬件加速平滑位移 */
+    transition: transform 0.1s ease-in-out; 
+    box-sizing: border-box;
+}
+
+/* 特效动画：移除冲突，独立控制 */
+.tile-new { animation: appear 0.12s ease-in-out; }
+.tile-merged { animation: pop 0.12s ease-in-out; }
+
+@keyframes appear { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+/* 数字外观样式保持经典 */
+.tile-2 { background: #eee4da; color: var(--text-dark); }
+.tile-4 { background: #ede0c8; color: var(--text-dark); }
+.tile-8 { background: #f2b179; color: var(--text-light); }
+.tile-16 { background: #f59563; color: var(--text-light); }
+.tile-32 { background: #f67c5f; color: var(--text-light); }
+.tile-64 { background: #f65e3b; color: var(--text-light); }
+.tile-128 { background: #edcf72; color: var(--text-light); font-size: 26px; }
+.tile-256 { background: #edcc61; color: var(--text-light); font-size: 26px; }
+.tile-512 { background: #edc850; color: var(--text-light); font-size: 26px; }
+.tile-1024 { background: #edc53f; color: var(--text-light); font-size: 20px; }
+.tile-2048 { background: #edc22e; color: var(--text-light); font-size: 20px; }
+.tile-super { background: #3c3a32; color: var(--text-light); font-size: 16px; }
+
+.cyberpunk .tile-2 { background: #00ffcc !important; color: #000; text-shadow: 0 0 5px #00ffcc; }
+.cyberpunk .tile-4 { background: #ff00ff !important; color: #fff; text-shadow: 0 0 5px #ff00ff; }
+.cyberpunk { background: #121212 !important; }
+
+.game-message {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(238, 228, 218, 0.73); display: none;
+    flex-direction: column; justify-content: center; align-items: center; z-index: 10;
+}
+.game-message p { font-size: 60px; font-weight: bold; margin: 0; }
+.game-message button { background: #8f7a66; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
